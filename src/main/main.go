@@ -3,12 +3,18 @@ package main
 import (
 	"fmt"
 	"../LinkedList"
+	"math/rand"
 )
 
 func main() {
 	TestList0 := LinkedList.NewLinkedList()
 	fmt.Println("Hello")
-	TestList0.Insert( 1 )
-	fmt.Println( TestList0.Header.Element == nil )
-	fmt.Println( *TestList0.Header.Next.Element )
+	
+	for i := 0 ; i < 20 ; i++ {
+		TestList0.Add( rand.Intn(100) )
+	}
+
+	fmt.Println( TestList0.Header.Element == 0 )
+	fmt.Println( TestList0.Header.Next.Element )
+	TestList0.Show()
 }

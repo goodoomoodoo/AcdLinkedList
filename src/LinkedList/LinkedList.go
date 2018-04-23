@@ -1,5 +1,7 @@
 package LinkedList
 
+import "fmt"
+
 type LinkedList struct{
 	Header *ListNode
 }
@@ -8,7 +10,7 @@ type LinkedList struct{
 *	List Node Type
 **/
 type ListNode struct {
-	Element *interface{}
+	Element int
 	Next *ListNode
 }
 
@@ -17,22 +19,42 @@ type ListNode struct {
 *	Constructor of LinkedList: not really necessary I guess
 **/
 func NewLinkedList() *LinkedList {
-	header := &ListNode{ nil , nil }
+	//declare local variable header
+	header := &ListNode{ 0 , nil }
 	newList := LinkedList{ header }
 	return &newList
 }
 
 /**
-*	Add things to the list
+*	Insert things to the list
 **/
-func ( lst LinkedList ) Insert( newElement interface{} ) {
+func ( lst LinkedList ) Insert( newElement int , curNode *ListNode ) {
 	//declaration for new Node
-	newNode := ListNode{ &newElement , nil }
+	newNode := ListNode{ newElement , nil }
 
-	if lst.Header.Next == nil {
-		lst.Header.Next = &newNode
-	} else {
-		newNode.Next = lst.Header.Next
-		lst.Header.Next = &newNode
+	newNode.Next = curNode.Next
+	curNode.Next = &newNode
+}
+
+/**
+*	Add element to the list in ascending order
+**/
+func ( lst LinkedList ) Add( newElement int ) {
+	nodePtr := lst.Header
+
+	for ; nodePtr.Next != nil && nodePtr.Next.Element < newElement ;
+		 nodePtr = nodePtr.Next {
+
+	}
+
+	lst.Insert( newElement , nodePtr )
+}
+
+/**
+*	Print every item in the current list
+**/
+func ( lst LinkedList ) Show() {
+	for nodePtr := lst.Header.Next ; nodePtr != nil ; nodePtr = nodePtr.Next {
+		fmt.Printf( "%v " , nodePtr.Element )
 	}
 }
